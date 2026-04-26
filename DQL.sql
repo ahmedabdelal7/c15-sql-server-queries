@@ -99,7 +99,7 @@ SELECT Departments.Name FROM Departments
 WHERE ID NOT IN (SELECT DepartmentID FROM Employees WHERE MonthlySalary <= 210)
 
 -----------------------------------------------------
---The SQL ORDER BY Keyword
+--Sorting : Order By
 -----------------------------------------------------
 
 SELECT * FROM Employees
@@ -130,33 +130,39 @@ Order By MonthlySalary ;
 
 select ID, FirstName,MonthlySalary from Employees
 where DepartmentID=1
-Order By MonthlySalary Asc;
-
-
-select ID, FirstName,MonthlySalary from Employees
-where DepartmentID=1
 Order By MonthlySalary Desc;
-
-
 
 select ID, FirstName,MonthlySalary from Employees
 where DepartmentID=1
 Order By FirstName , MonthlySalary ;
 
 
-select ID, FirstName,MonthlySalary from Employees
-where DepartmentID=1
-Order By FirstName ASC, MonthlySalary Desc;
+-----------------------------------------------------
+--Select Top Statement
+-----------------------------------------------------
+
+SELECT TOP 10 * FROM Employees;
 
 
+SELECT TOP 10 FirstName,DepartmentID FROM Employees;
+
+SELECT TOP 10 PERCENT FirstName,MonthlySalary FROM Employees;
 
 
+SELECT FirstName, MonthlySalary FROM Employees WHERE MonthlySalary IN
+(
+	SELECT DISTINCT TOP 3 MonthlySalary FROM Employees
+	ORDER BY MonthlySalary DESC
+)
+ORDER BY MonthlySalary DESC
 
 
-
-
-
-
+SELECT FirstName, MonthlySalary FROM Employees WHERE MonthlySalary IN
+(
+	SELECT DISTINCT TOP 3 MonthlySalary FROM Employees
+	ORDER BY MonthlySalary ASC
+)
+ORDER BY MonthlySalary
 
 
 
