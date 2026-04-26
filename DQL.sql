@@ -189,10 +189,17 @@ SELECT ID, FirstName + ' ' + LastName AS FullName, MonthlySalary,
 	YearlySalary = MonthlySalary * 12 FROM Employees;
 
 
+-----------------------------------------------------
+--Between Operator
+-----------------------------------------------------
+
+USE HR_Database
+SELECT * FROM Employees
+WHERE (MonthlySalary >= 500) AND (MonthlySalary <= 1000);
 
 
-
-
+SELECT * FROM Employees
+WHERE MonthlySalary BETWEEN 500 AND 1000;
 
 
 
