@@ -164,12 +164,29 @@ SELECT FirstName, MonthlySalary FROM Employees WHERE MonthlySalary IN
 )
 ORDER BY MonthlySalary
 
+-----------------------------------------------------
+--Select As Statement
+-----------------------------------------------------
+
+SELECT A = 5*4, B = 10/2
+FROM Employees;
+
+SELECT ID, FullName = FirstName + ' ' + LastName FROM Employees;
 
 
+SELECT ID, FirstName + ' ' + LastName AS FullName FROM Employees;
 
+SELECT ID, FirstName + ' ' + LastName AS FullName,  Age = DATEDIFF(YEAR,DateOfBirth,getDate())  FROM Employees
 
+SELECT ID, FirstName + ' ' + LastName AS FullName, MonthlySalary, 
+	BounusAmount = MonthlySalary * BonusPerc FROM Employees  ;
 
+SELECT ID, FirstName + ' ' + LastName AS FullName, MonthlySalary, 
+	YearlySalary = MonthlySalary * 12 FROM Employees;
 
+SELECT ID, FirstName + ' ' + LastName AS FullName, MonthlySalary,
+	BonusAmount = MonthlySalary * BonusPerc,
+	YearlySalary = MonthlySalary * 12 FROM Employees;
 
 
 
