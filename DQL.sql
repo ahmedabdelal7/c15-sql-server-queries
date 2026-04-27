@@ -245,13 +245,17 @@ SELECT Gendor, TotalCountSalary = COUNT(MonthlySalary),
 		GROUP BY Gendor
 		ORDER BY Gendor;
 
---Number of employees in each department
+-----------------------------------------------------
+--Important Questions on Group By Statement
+-----------------------------------------------------
+
+--1--Number of employees in each department
 select DepartmentID, CountTotalEmployees = Count(ID)
 		from Employees
 		group by DepartmentID
 		order by DepartmentID;
 
---Sum of salaries on each department
+--2--Sum of salaries on each department
 select
 	DepartmentID,
 	TotalSalaries = Sum(MonthlySalary)
@@ -259,7 +263,7 @@ from Employees
 group by DepartmentID
 order by DepartmentID;
 
---Lowest salary in each department
+--3--Lowest salary in each department
 select 
 	DepartmentID,
 	MinMonthlySalary = Min(MonthlySalary)
@@ -267,7 +271,7 @@ from Employees
 group by DepartmentID
 order by DepartmentID;
 
---Highest salary in each department
+--4--Highest salary in each department
 select 
     DepartmentID, 
     Max(MonthlySalary) as HighestSalary
@@ -275,7 +279,7 @@ from Employees
 group by DepartmentID
 order by DepartmentID;
 
---Most recent hire date in each depratment
+--5--Most recent hire date in each depratment
 select
 	DepartmentID,
 	Max(HireDate)
@@ -283,8 +287,7 @@ from Employees
 group by DepartmentID
 order by DepartmentID;
 
---Oldest hire date in each depratment
-
+--6--Oldest hire date in each depratment
 select 
 	DepartmentID,
 	Min(HireDate)
@@ -292,18 +295,59 @@ from Employees
 group by DepartmentID
 order by DepartmentID;
 
---Number of employees who got hired each year
+--7--Number of employees who got hired each year
+select 
+	distinct Year = Year(HireDate),
+	EmpHiredCount = Count(ID)
+from Employees
+group by Year(HireDate)
+order by Year(HireDate)
 
+ 
 
+--7--Number of employees who got In Specific Year(1994)
+select Year = Year(HireDate),--In Specific Year
+	ID, FirstName, HireDate
+from Employees
+where Year(HireDate) = 1994;
 
+--9--Number of employees and average salary for each in every department 
+select 
+	DepartmentID,
+	NumberOfEmployees = Count(ID),
+	AverageSalary = Avg(MonthlySalary)	
+from Employees
+group by DepartmentID
+order by DepartmentID;
 
+--10--Lowest and highest salary in each department
+select 
+	DepartmentID,
+	DepartmentName = 
+	(select Departments.Name from Departments where Departments.ID in (Employees.DepartmentID)),
+	Min(MonthlySalary) as MinSalary ,
+	Max(MonthlySalary) as MaxSalary 
+from Employees
+group by DepartmentID
+order by DepartmentID;
 
+--11--Number of employees from each country
+select 
+	CountryID,
+	CountryName = 
+	(select Countries.Name from Countries where Countries.ID = CountryID) ,
+	EmployeesCount = Count(ID)
+from Employees
+group by CountryID
+order by CountryID
 
-
-
-
-
-
+--12--Sum of Bonus percentage for each depratment
+select 
+	DepartmentID,
+	Sum(BonusPerc) as TotalBounusCount 
+from Employees
+group by DepartmentID
+order by DepartmentID
 
 
 
