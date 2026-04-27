@@ -201,7 +201,29 @@ WHERE (MonthlySalary >= 500) AND (MonthlySalary <= 1000);
 SELECT * FROM Employees
 WHERE MonthlySalary BETWEEN 500 AND 1000;
 
+-----------------------------------------------------
+--Count, Sum, Avg, Min, Max Functions
+-----------------------------------------------------
 
+SELECT TotalCountSalary = COUNT(MonthlySalary),
+		TotalSalary = SUM(MonthlySalary),
+		AverageSalary = AVG(MonthlySalary),
+		MinSalary = MIN(MonthlySalary),
+		MaxSalary = Max(MonthlySalary)
+FROM Employees;
+
+SELECT TotalCountSalary = COUNT(MonthlySalary),
+		TotalSalary = SUM(MonthlySalary),
+		AverageSalary = AVG(MonthlySalary),
+		MinSalary = MIN(MonthlySalary),
+		MaxSalary = Max(MonthlySalary)
+FROM Employees WHERE DepartmentID = 5;
+
+SELECT * FROM Employees;
+
+SELECT TotalCount =  COUNT(ID) FROM Employees;
+
+SELECT ResignedEmployees =  COUNT(ExitDate) FROM Employees; --Count Only Not NULL.
 
 
 
