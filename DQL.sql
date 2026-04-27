@@ -225,6 +225,94 @@ SELECT TotalCount =  COUNT(ID) FROM Employees;
 
 SELECT ResignedEmployees =  COUNT(ExitDate) FROM Employees; --Count Only Not NULL.
 
+-----------------------------------------------------
+--Group By Statement
+-----------------------------------------------------
+
+SELECT  DepartmentID, TotalCountSalary = COUNT(MonthlySalary),
+		TotalSalary = SUM(MonthlySalary),
+		AverageSalary = AVG(MonthlySalary),
+		MinSalary = MIN(MonthlySalary),
+		MaxSalary = Max(MonthlySalary)
+		FROM Employees; -- ERROR
+
+SELECT Gendor, TotalCountSalary = COUNT(MonthlySalary),
+		TotalSumSalary = SUM(MonthlySalary),
+		AverageSalary = AVG(MonthlySalary),
+		MinSalary = MIN(MonthlySalary),
+		MaxSalary = Max(MonthlySalary)
+		FROM Employees
+		GROUP BY Gendor
+		ORDER BY Gendor;
+
+--Number of employees in each department
+select DepartmentID, CountTotalEmployees = Count(ID)
+		from Employees
+		group by DepartmentID
+		order by DepartmentID;
+
+--Sum of salaries on each department
+select
+	DepartmentID,
+	TotalSalaries = Sum(MonthlySalary)
+from Employees
+group by DepartmentID
+order by DepartmentID;
+
+--Lowest salary in each department
+select 
+	DepartmentID,
+	MinMonthlySalary = Min(MonthlySalary)
+from Employees
+group by DepartmentID
+order by DepartmentID;
+
+--Highest salary in each department
+select 
+    DepartmentID, 
+    Max(MonthlySalary) as HighestSalary
+from Employees
+group by DepartmentID
+order by DepartmentID;
+
+--Most recent hire date in each depratment
+select
+	DepartmentID,
+	Max(HireDate)
+from Employees
+group by DepartmentID
+order by DepartmentID;
+
+--Oldest hire date in each depratment
+
+select 
+	DepartmentID,
+	Min(HireDate)
+from Employees
+group by DepartmentID
+order by DepartmentID;
+
+--Number of employees who got hired each year
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
