@@ -357,6 +357,8 @@ order by DepartmentID
 --The HAVING clause was added to SQL because
 --the WHERE keyword cannot be used with aggregate functions in a direct way.
 
+--Having is a filteration for the out result of group by agregate function. 
+
 select DepartmentID, TotalCount=Count(MonthlySalary), 
 	   TotalSum=Sum(MonthlySalary),
 	   Average=Avg(MonthlySalary),
@@ -381,12 +383,47 @@ where T1.TotalCount >= 100
 order by T1.DepartmentID;
 
 
+-----------------------------------------------------
+--Like Operator
+-----------------------------------------------------
+
+Select FirstName from Employees
+where FirstName LIKE 'a%';
 
 
+Select FirstName from Employees
+where FirstName LIKE '%a';
 
+Select FirstName from Employees
+where FirstName LIKE '%ella%';
 
+--the second letter is a
+Select FirstName from Employees
+where FirstName LIKE '_a%';
 
+--the third letter from the end is a
+Select FirstName from Employees
+where FirstName LIKE '%a__';
 
+--start with a and name is 3 letters only
+Select FirstName from Employees
+where FirstName LIKE 'a__';
+
+--start with a and name is atleast 2 letters
+Select FirstName from Employees
+where FirstName LIKE 'a_%';
+
+--start with a and name is atleast 5 letters
+Select FirstName from Employees
+where FirstName LIKE 'a____%';
+
+select 
+	DepartmentID,
+	count(*) as EmpCount
+from Employees
+where FirstName like 'a%' and BonusPerc > 0 
+group by DepartmentID
+having count(*) > 2
 
 
 
