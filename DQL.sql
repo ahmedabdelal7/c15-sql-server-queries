@@ -350,15 +350,35 @@ group by DepartmentID
 order by DepartmentID
 
 
+-----------------------------------------------------
+--Having Statement
+-----------------------------------------------------
 
+--The HAVING clause was added to SQL because
+--the WHERE keyword cannot be used with aggregate functions in a direct way.
 
+select DepartmentID, TotalCount=Count(MonthlySalary), 
+	   TotalSum=Sum(MonthlySalary),
+	   Average=Avg(MonthlySalary),
+	   MinSalary=Min(MonthlySalary),
+	   MaxSalary=Max(MonthlySalary) 
+from Employees
+Group By DepartmentID
+having Count(MonthlySalary)> 100
+order by DepartmentID
 
-
-
-
-
-
-
+--Same Statement Using Where Satement
+select * from (
+	select DepartmentID, TotalCount=Count(MonthlySalary), 
+		   TotalSum=Sum(MonthlySalary),
+		   Average=Avg(MonthlySalary),
+		   MinSalary=Min(MonthlySalary),
+		   MaxSalary=Max(MonthlySalary) 
+	from Employees
+	Group By DepartmentID
+)T1 -- Make name for the result table
+where T1.TotalCount >= 100
+order by T1.DepartmentID;
 
 
 
