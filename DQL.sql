@@ -468,7 +468,48 @@ select ID, FirstName, LastName from Employees
 Where firstName like '[a-l]%';
 ---------------------------------
 
+--=====================================================================
+--								Joins
+--=====================================================================
 
 
+-----------------------------------------------------
+-- Restore Shop Database
+-----------------------------------------------------
+
+Restore Database Shop_Database From Disk = 'C:\Shop_Database.bak'
+use Shop_Database;
+EXEC sp_changedbowner 'sa';
+
+
+-----------------------------------------------------
+-- Inner Join
+-----------------------------------------------------
+
+select 
+	Customers.CustomerID , Customers.Name,
+	Orders.Amount as OrderAmount
+	from Customers inner join Orders 
+	On Customers.CustomerID = Orders.CustomerID
+
+-- Join Same As Inner Join
+select 
+	Customers.CustomerID , Customers.Name,
+	Orders.Amount as OrderAmount
+	from Customers join Orders 
+	On Customers.CustomerID = Orders.CustomerID;
+
+Use HR_Database;
+
+select 
+	Employees.FirstName + ' ' + Employees.LastName as FullName,
+	Countries.Name AS CountryName,
+	Employees.MonthlySalary,
+	Departments.Name AS DepName
+from Employees Inner Join Departments
+	On Employees.DepartmentID = Departments.ID 
+	inner join Countries
+	On Employees.CountryID = Countries.ID	
+where Departments.Name = 'Finance' and MonthlySalary > 1000
 
 
