@@ -512,4 +512,65 @@ from Employees Inner Join Departments
 	On Employees.CountryID = Countries.ID	
 where Departments.Name = 'Finance' and MonthlySalary > 1000
 
+-----------------------------------------------------
+-- Left Outer Join
+-----------------------------------------------------
+
+Use Shop_Database;
+SELECT Customers.CustomerID, Customers.Name, Orders.Amount
+FROM     Customers LEFT OUTER JOIN
+                  Orders ON Customers.CustomerID = Orders.CustomerID
+
+
+Use Shop_Database;
+SELECT Customers.CustomerID, Customers.Name, Orders.Amount
+FROM     Customers LEFT JOIN
+                  Orders ON Customers.CustomerID = Orders.CustomerID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
