@@ -841,9 +841,21 @@ where exists (
 order by e.FirstName;
 
 
+-----------------------------------------------------
+--  Union
+-----------------------------------------------------
 
+select * from ActiveEmployees
+Union 
+select * from  ResignedEmployees
 
+select * from Departments
+union -- Defult is Distinct
+select * from departments
 
+select * from Departments
+union ALL -- Without Distinct
+select * from departments
 
 
 
