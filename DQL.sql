@@ -541,13 +541,29 @@ FROM     Customers FULL OUTER JOIN
                   Orders ON Customers.CustomerID = Orders.CustomerID
 
 
+-----------------------------------------------------
+-- Exersises
+-----------------------------------------------------
+
+select * from Customers;
+select * from Orders;
 
 
+select 
+	Customers.Name,
+	Orders.Amount
+from Customers Inner Join Orders ON Customers.CustomerID = Orders.CustomerID; 
 
 
-
-
-
+select 
+	c.CustomerID,
+	c.Name,
+	sum(o.Amount) as TotalAmount?
+	Count(o.)
+from Customers c
+inner join Orders o
+on c.CustomerID = o.CustomerID
+group by c.CustomerID, c.Name;
 
 
 
