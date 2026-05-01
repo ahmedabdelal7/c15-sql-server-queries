@@ -1,4 +1,4 @@
-
+﻿
 --=====================================================================
 --				    	SQL - Queries
 --=====================================================================
@@ -551,7 +551,7 @@ select
 	Orders.Amount
 from Customers Inner Join Orders ON Customers.CustomerID = Orders.CustomerID; 
 
---Get each customer�s total order amount and number of orders
+--Get each customer’s total order amount and number of orders
 select 
 	c.CustomerID,
 	c.Name,
@@ -629,25 +629,43 @@ FROM Employees
 WHERE ExitDate is null;
 
 
+
+
+
+create view ResignedEmployees as
+select * from Employees
+Where ExitDate is not Null
+
+
+
+
+
+
+
+
+
+
 select ID, FirstName + ' ' + LastName AS FullName, MonthlySalary
 from ActiveEmployees
 
---Question 1 � IT Employees
+--Question 1 – IT Employees
 --Create a view called IT_Employees that shows FirstName, LastName,
 --and Departments.Name as DeptName for all employees who work in the IT department.
 
 create view IT_Employees as 
-select FirstName, LastName, Departments.Name as DeptName
+select 
+	FirstName,
+	LastName,
+	Departments.Name as DeptName
 from Employees inner join  Departments
 On Employees.DepartmentID = Departments.ID
 where Departments.Name = 'IT'
 
 
---Question 2 � Employees with Country
+--Question 2 – Employees with Country
 
 --Create a view called Employee_Countries that shows FirstName, LastName, 
 --and the country name (Countries.Name) for each employee.
-
 
 create view Employee_Countries as 
 select 
@@ -657,22 +675,299 @@ select
 from Employees e inner join Countries c
 on e.CountryID = c.ID
 
---Question 3 � High Salary Employees
+
+--Question 3 – High Salary Employees
 
 --Create a view called HighSalaryEmployees that shows FirstName, LastName,MonthlySalary, 
 --and department name (Departments.Name as DeptName) for all employees whose monthly salary is greater than 2700.
 
-
 create view HighSalaryEmployees as
 select 
+	Employees.FirstName,
+	Employees.LastName,
+	Employees.MonthlySalary,
+	Departments.Name as DepName
+from Employees join Departments
+On Employees.DepartmentID = Departments.ID
+where MonthlySalary > 2700;
+
+
+
+--Question 4 – Recent Hires
+
+--Create a view called RecentHires that shows FirstName, LastName, HireDate, and department name (Departments.Name as DeptName) 
+--for all employees who were hired after January 1, 2022.
+
+create view RecentHires as 
+select 
+	Employees.FirstName,
+	Employees.LastName,
+	Employees.HireDate,
+	Departments.Name as DepName
+from Employees inner join Departments
+on Employees.DepartmentID = Departments.ID
+where HireDate >= '2022-01-01';
+
+
+--Question 5 – Employee Salary with Bonus
+
+--Create a view called EmployeeSalaryWithBonus that shows FirstName, LastName, MonthlySalary, BonusPerc, 
+--and a calculated column TotalSalary which is MonthlySalary + (MonthlySalary * BonusPerc / 100).
+
+
+create view EmployeeSalaryWithBonus as 
+select 
+	Employees.FirstName, 
+	Employees.LastName,
+	Employees.MonthlySalary,
+	Employees.BonusPerc,
+	TotalSalary = MonthlySalary + (MonthlySalary * BonusPerc / 100)
+from Employees 
+
+
+-----------------------------------------------------
+-- Exists
+-----------------------------------------------------
+
+use Shop_Database;
+
+select X='yes'
+where  exists 
+( 
+	select * from Orders
+	where customerID= 3 and Amount < 600
+)
+
+
+select * from Customers T1
+where exists 
+( 
+	select * from Orders
+	where Orders.customerID = T1.CustomerID and Orders.Amount < 600
+)
+
+--More optimized and faster
+select * from Customers T1
+where exists 
+( 
+	select top 1 * from Orders
+	where customerID= T1.CustomerID and Amount < 600
+)
+
+
+--More optimized and faster
+select * from Customers T1
+where exists 
+(
+   	select top 1 R='Y'  from Orders
+	where customerID= T1.CustomerID and Amount < 600
+)
+
+
+use HR_Database;
+--1️ Employees in a specific department
+
+--List all employees who belong to the “IT” department.
+--Use EXISTS to check the department.
+
+select 
+	e.ID,
+	e.FirstName,
+	d.Name as DepName
+from Employees e
+inner join Departments d
+on e.DepartmentID = d.ID
+where exists (
+	select R = 'y'
+	from Departments
+	where DepartmentID = Departments.ID 
+	and Departments.Name = 'IT'
+);
+
+
+--2️ Employees with high bonus
+
+--List all employees who have a BonusPerc greater than 20%.
+--Use EXISTS to filter employees.
+
+select 
+	e.FirstName,
+	e.BonusPerc
+from Employees e
+where Exists
+(
+	select 1
+	from Employees 
+	where Employees.ID = e.ID  
+	and Employees.BonusPerc > 0.20
+)
+
+
+--3️ Employees working in certain countries
+
+--List all employees who work in countries whose name starts with “U”.
+--Use EXISTS to check the country.
+
+select
+	e.ID,
 	e.FirstName,
 	e.LastName,
-	e.MonthlySalary
-	d.Name as DepName
-from Employees e inner join Departments d
+	c.Name
+from Employees e inner join Countries c
+on e.CountryID = c.ID
+where exists 
+(
+	select 1
+	from Countries
+	where e.CountryID = Countries.ID 
+	and Countries.Name Like 'U%'
+)order by e.FirstName;
+
+select * from employees
 
 
-	
+
+select 
+	e.ID,
+	e.FirstName,
+	e.LastName
+from Employees e
+where exists (
+	select 1
+	from Countries c
+	where c.ID = e.CountryID
+	and c.Name like 'U%'
+)
+order by e.FirstName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
