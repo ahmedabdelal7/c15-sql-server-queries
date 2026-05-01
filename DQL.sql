@@ -545,43 +545,134 @@ FROM     Customers FULL OUTER JOIN
 -- Exersises
 -----------------------------------------------------
 
-select * from Customers;
-select * from Orders;
-
-
+--Get customer names and their order amounts
 select 
 	Customers.Name,
 	Orders.Amount
 from Customers Inner Join Orders ON Customers.CustomerID = Orders.CustomerID; 
 
-
+--Get each customer’s total order amount and number of orders
 select 
 	c.CustomerID,
 	c.Name,
-	sum(o.Amount) as TotalAmount?
-	Count(o.)
+	sum(o.Amount) as TotalAmount,
+	Count(o.Amount) as OrdersCount
 from Customers c
 inner join Orders o
 on c.CustomerID = o.CustomerID
 group by c.CustomerID, c.Name;
 
+--Get customers whose total order amount is greater than 300
+Select		
+	c.CustomerID,
+	c.Name,
+	Sum(o.Amount) as TotalOrdersAmount,
+	Count(o.Amount) as OrdersCount
+from Customers c 
+inner join Orders o
+ON c.CustomerID = o.CustomerID
+Group by c.CustomerID , c.Name
+having Sum(o.Amount) > 300;
+
+--Get customers who have no orders
+select 
+	c.CustomerID,
+	c.Name,
+	o.Amount
+from Customers c
+left join Orders o 
+On c.CustomerID = o.CustomerID
+where o.Amount is null
+group by o.Amount
+having o.Amount is null
+
+--Get customers who have at least one order
+select 
+	c.CustomerID,
+	c.Name,
+	count(o.OrderID) as TotalOrdersCount
+from Customers c
+left join Orders o
+on c.CustomerID = o.CustomerID
+group by c.CustomerID, c.Name
+having count(o.OrderID) >= 1;
 
 
 
+--Get customer Name and highest order amount (Max) for each customer
+select c.CustomerID, c.Name, Max(o.Amount) as "Max Amount"
+from Customers c Join Orders o
+On c.CustomerID = o.CustomerID
+group by c.CustomerID, c.Name
 
 
+--Get the customer who has the highest total order amount
+Select Top 1
+	C.CustomerID, c.Name, Sum(O.Amount) as TotalOrdersSum
+from Customers c inner join Orders o
+on c.CustomerID = O.CustomerID
+group by c.CustomerID ,c.Name
+order by TotalOrdersSum desc
+
+-----------------------------------------------------
+--  Views
+-----------------------------------------------------
+
+Use HR_Database;
+
+--Without using View
+--select * from Employees Where ExitDate Is Null;
+
+CREATE VIEW ActiveEmployees AS
+SELECT *
+FROM Employees
+WHERE ExitDate is null;
 
 
+select ID, FirstName + ' ' + LastName AS FullName, MonthlySalary
+from ActiveEmployees
+
+--Question 1 – IT Employees
+--Create a view called IT_Employees that shows FirstName, LastName,
+--and Departments.Name as DeptName for all employees who work in the IT department.
+
+create view IT_Employees as 
+select FirstName, LastName, Departments.Name as DeptName
+from Employees inner join  Departments
+On Employees.DepartmentID = Departments.ID
+where Departments.Name = 'IT'
 
 
+--Question 2 – Employees with Country
+
+--Create a view called Employee_Countries that shows FirstName, LastName, 
+--and the country name (Countries.Name) for each employee.
 
 
+create view Employee_Countries as 
+select 
+	e.FirstName, 
+	e.LastName,
+	c.Name as CountryName
+from Employees e inner join Countries c
+on e.CountryID = c.ID
+
+--Question 3 – High Salary Employees
+
+--Create a view called HighSalaryEmployees that shows FirstName, LastName,MonthlySalary, 
+--and department name (Departments.Name as DeptName) for all employees whose monthly salary is greater than 2700.
 
 
+create view HighSalaryEmployees as
+select 
+	e.FirstName,
+	e.LastName,
+	e.MonthlySalary
+	d.Name as DepName
+from Employees e inner join Departments d
 
 
-
-
+	
 
 
 
