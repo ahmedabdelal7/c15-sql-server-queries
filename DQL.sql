@@ -858,17 +858,32 @@ union ALL -- Without Distinct
 select * from departments
 
 
+-----------------------------------------------------
+--  Case
+-----------------------------------------------------
 
+select 
+	ID, 
+	FirstName,
+	Gendor = 
+	Case
+		When Gendor ='F' Then 'Female'
+		When Gendor = 'M' Then 'Male'
+		ELSE 'Unknown'
+	End
 
+from Employees
 
-
-
-
-
-
-
-
-
+select  
+	ID,
+	FirstName,
+	WorkStatus = 
+	CASE
+		When ExitDate is null Then 'Active'
+		When ExitDate is not null Then 'Resigned'
+		ELSE 'Unknown'
+	END
+from Employees
 
 
 
