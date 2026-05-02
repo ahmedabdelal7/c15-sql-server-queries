@@ -154,3 +154,45 @@ add Constraint UQ_Age Unique(Age);
 
 alter table Persons
 drop Constraint UQ_Age ;
+
+
+------------------------------------------------
+-- INDEX (Clustered - Non Clustered)
+------------------------------------------------
+
+drop table Persons;
+
+create table Persons
+(
+	ID int primary key,
+	FirstName varchar(20) not null,
+	LastName varchar(20),
+	Age smallint 		
+)
+
+-- by defualt index is non-clustered
+-- by defualt Primary key is Clustered index automaticly
+
+create clustered index idx_Persons_ID 
+on Persons(ID);
+
+create nonclustered index idx_Persons_FirstName
+on Persons(FirstName);
+
+create nonclustered index idx_Persons_FirstName
+on Persons(FirstName);
+
+drop index idx_Persons_FirstName on Persons
+-- or
+drop index Persons.idx_Persons_FirstName; 
+
+
+create index idx_Persons_First_Last_Name 
+on Persons(FirstName, lastName DESC);
+
+
+
+
+
+
+
