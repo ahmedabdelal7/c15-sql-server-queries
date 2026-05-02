@@ -67,8 +67,11 @@ ADD Constraint FK_CustomerOrder Foreign Key (CustomerID)
 References Customers(ID);
 
 
+------------------------------------------------
+-- Not Null Constraint
+------------------------------------------------
 
-
-
-
+--Edit Not Null Contraint
+Alter Table Orders
+Alter Column Amount int NOT NULL
 
