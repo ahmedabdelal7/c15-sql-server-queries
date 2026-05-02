@@ -75,3 +75,28 @@ References Customers(ID);
 Alter Table Orders
 Alter Column Amount int NOT NULL
 
+------------------------------------------------
+-- DEFAULT Constraint
+------------------------------------------------
+
+ALter Table Orders
+Add OrderDate Date DEFAULT GetDate();
+
+
+CREATE TABLE Persons (
+   ID int NOT NULL,
+   LastName varchar(255) NOT NULL,
+   FirstName varchar(255),
+   Age int,
+   --City varchar(255) Default 'Aman'
+   City varchar(255) 
+
+   Constraint DF_City DEFAULT 'Amman'
+);
+
+
+Alter Table Persons
+Drop Constraint DF_City;
+
+Alter Table Persons
+Add Constraint df_City Default 'Amman' For City
