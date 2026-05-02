@@ -4,11 +4,11 @@
 
 use master ;
 
-create Database DB4
+create Database DB4;
 
 use DB4;
 
-create Table StudentS
+create Table Students
 (
 	ID INT NOT NULL ,
 	FirstName varchar(20)NOT NULL,
@@ -21,8 +21,54 @@ create Table StudentS
 );
 
 ALTER TABLE Students
-Drop Constraint PK_Students
+Drop Constraint PK_Students;
 
 ALTER TABLE Students
-ADD Constraint PK_Students Primary Key (ID,FirstName)
+ADD Constraint PK_Students Primary Key (ID,FirstName);
+
+------------------------------------------------
+-- Forign Key Constraint
+------------------------------------------------
+
+use master;
+
+Create Database DB5;
+use DB5;
+
+Create Table Customers
+(
+	ID	int Not Null ,
+	Name varchar(20) Not Null,
+	
+	Constraint PK_Customers Primary Key (ID)
+
+);
+
+Create Table Orders
+(
+	ID int Not Null,
+	Amount int,
+	CustomerID int 
+
+	Constraint PK_Orders Primary Key (ID)
+
+	Constraint FK_CustomerOrder Foreign Key (CustomerID)
+	References Customers(ID)
+
+);
+
+--Drop Forign Key Constraint
+Alter Table Orders
+Drop Constraint FK_CustomerOrder;
+
+--ADD Forign Key Constraint
+Alter Table Orders 
+ADD Constraint FK_CustomerOrder Foreign Key (CustomerID)
+References Customers(ID);
+
+
+
+
+
+
 
