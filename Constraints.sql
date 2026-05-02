@@ -100,3 +100,31 @@ Drop Constraint DF_City;
 
 Alter Table Persons
 Add Constraint df_City Default 'Amman' For City
+
+------------------------------------------------
+-- CHECK Constraint
+------------------------------------------------
+
+create table Persons
+(
+	ID  int Not Null,
+	Name varchar(20),
+	City varchar(200),
+	Age int Check (Age > 18)
+
+);
+
+drop table Persons;
+
+create table Persons
+(
+	ID  int Not Null,
+	Name varchar(20),
+	City varchar(200),
+	Age int,
+
+	Constraint CHK_Person Check (Age >= 18 and City = 'Amman')
+)
+
+Alter table Persons
+drop constraint CHK_Person
