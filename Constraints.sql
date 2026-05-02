@@ -128,3 +128,29 @@ create table Persons
 
 Alter table Persons
 drop constraint CHK_Person
+
+------------------------------------------------
+-- UNIQUE Constraint
+------------------------------------------------
+
+--Unique Key DIff of primary key , because it allows  null (just one null-not redundunt)
+drop table Persons;
+
+create table Persons
+(
+	ID int Not Null,
+	Name varchar(20) UNIQUE ,
+	City varchar(200),
+	Age int Check (Age > 18)
+
+);
+
+alter table Persons
+add  UNIQUE(City);
+
+
+alter table Persons
+add Constraint UQ_Age Unique(Age);
+
+alter table Persons
+drop Constraint UQ_Age ;
